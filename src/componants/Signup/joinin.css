@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Geologica:wght@400&display=swap');
+:root {
+  --main_color:#0a66c2;
+  --bg_color:#F3F2F0;
+  --main-hover_color:#043a70f4;
+}
+
+.bg-color{
+    background-color: var(--bg_color);
+}
+.text-color{
+ --main_color:#0a66c2;
+}
+/* container*/
+.sign-up-container{
+  height: 100%;
+  width: 100%;
+  background-color: var(--bg_color);
+}
+/* logo container */
+.logo-contaner{
+  width: 70%;
+  
+}
+/* logo */
+.logo-linkdin{
+    color: var(--main_color);
+}
+.logo-name{
+font-family: 'Geologica', sans-serif;
+}
+.clr-link{
+  color: var(--main_color);
+}
+.bg-clr{
+  background-color: var(--main_color);
+
+}
+.bg-clr:hover{
+  background-color: var(--main-hover_color);
+}
+.bg-clr:focus{
+  background-color: var(--main-hover_color);
+}
+
+input::placeholder {
+  color: rgba(0, 0, 0, 0.693);
+ 
+}
+
+/* sign in  */
+.form-contaner-signin{
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}

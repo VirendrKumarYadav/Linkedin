@@ -1,29 +1,58 @@
 import React, { useState } from "react";
 import "../Signup/joinin.css";
-import { Link } from "react-router-dom";
-import { useAuthContext } from '../AuthProvider';
+import { Link,useNavigate } from "react-router-dom";
+import { useAuthContext } from '../../firebase/AuthProvider';
+import GoogleButton from "react-google-button";
+import { toast } from "react-toastify";
+import Loader from "../LoadingConfig/Loader";
+
 
 const Signin = () => {
   const auth = useAuthContext();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
 
   const handleSubmit = async(e) => {
      e.preventDefault();
-    console.log(email,password);
+     try {
+       const response = await auth.signIn(email, password);
+       console.log(response);
+       // Signed in
+       toast.success("Created LinkedIn account.");
+     
+     } catch (err) {
+       console.error(err);
+     }
+  };
+  const signClicked = async (e) => {
+   e.preventDefault();
+   try {
+     const response = await auth.signIn(email, password);
+     console.log(response);
+     // Signed in
+     toast.success("Created LinkedIn account.");
+     // ...
+
+   } catch (err) {
+     console.error(err);
+   }
+  }
+
+  const onGoogleLogin = async (e) => {
+    console.log("onGoogleLogin");
     try {
-      const response = await auth.signIn(email, password);
-      console.log(response);
-      
-      
-      // navigate("/home");
-    } catch (err) {
-      console.error(err);
+      await auth.googleSignIn();
+      toast.success("Created LinkedIn account with Google");
+    } catch (e) {
+      console.error(e);
+      toast.error("Email Id Invalid");
     }
+
   };
   return (
-    <div>
+    <main>
       <div className=" w-screen flex justify-between flex-col flex-wrap">
         <div className="sign-up-container flex justify-center flex-col items-center ">
           <div className="logo-contaner  my-3">
@@ -34,7 +63,7 @@ const Signin = () => {
                 width="30"
                 height="30"
                 fill="currentColor"
-                class="bi bi-linkedin"
+                className="bi bi-linkedin"
                 viewBox="0 0 16 16"
               >
                 <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z" />
@@ -86,6 +115,7 @@ const Signin = () => {
               </div>
               <button
                 type="submit"
+                onClick={signClicked}
                 className=" w-full text-white py-3 px-4 rounded-full font-semibold focus:outline-none  bg-clr"
               >
                 Sign in
@@ -105,31 +135,16 @@ const Signin = () => {
               </div>
 
               <div className="signin-container flex flex-col gap-3">
-                <div className="flex justify-center items-center border-2 rounded-full p-1 hover:border-gray-600">
-                  <div className="flex justify-between items-center gap-x-3 w-11/12">
-                    <div className="flex gap-x-2 px-3">
-                      <img
-                        src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/google-color-icon.png"
-                        className="rounded-full"
-                        width={"20"}
-                        height={"20"}
-                      ></img>
-
-                      <p className="text-xs  gap-0 font-bold text-gray-600">
-                        Continue as a Virendra
-                        <br></br>
-                        <span className="text-xs font-thin">
-                          softech.vire@gmail.com
-                        </span>
-                      </p>
-                    </div>
-
-                    <img
-                      src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/google-color-icon.png"
-                      className="rounded-full "
-                      width={"20"}
-                    ></img>
-                  </div>
+                <div className="flex justify-center items-center my-4 ">
+                  <GoogleButton
+                    onClick={onGoogleLogin}
+                    className="rounded-full  flex "
+                    style={{
+                      display: "block",
+                      border: "none",
+                      cursor: "pointer",
+                    }}
+                  />
                 </div>
                 <div className="flex justify-center items-center border-2 rounded-full p-1 hover:border-gray-600">
                   <div className="flex gap-x-2 px-3 py-1 justify-center items-center">
@@ -138,9 +153,8 @@ const Signin = () => {
                       width="16"
                       height="16"
                       fill="currentColor"
-                      class="bi bi-apple"
+                      className="bi bi-apple text-black"
                       viewBox="0 0 16 16"
-                      className="text-black"
                     >
                       <path d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516s1.52.087 2.475-1.258.762-2.391.728-2.43m3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422s1.675-2.789 1.698-2.854-.597-.79-1.254-1.157a3.7 3.7 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56s.625 1.924 1.273 2.796c.576.984 1.34 1.667 1.659 1.899s1.219.386 1.843.067c.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758q.52-1.185.473-1.282" />
                       <path d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516s1.52.087 2.475-1.258.762-2.391.728-2.43m3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422s1.675-2.789 1.698-2.854-.597-.79-1.254-1.157a3.7 3.7 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56s.625 1.924 1.273 2.796c.576.984 1.34 1.667 1.659 1.899s1.219.386 1.843.067c.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758q.52-1.185.473-1.282" />
@@ -158,9 +172,9 @@ const Signin = () => {
                       width="16"
                       height="16"
                       fill="currentColor"
-                      class="bi bi-link-45deg"
+                      className="bi bi-link-45deg text-black"
                       viewBox="0 0 16 16"
-                      className="text-black"
+                     
                     >
                       <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1 1 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4 4 0 0 1-.128-1.287z" />
                       <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243z" />
@@ -196,7 +210,7 @@ const Signin = () => {
                 width="13"
                 height="30"
                 fill="currentColor"
-                class="bi bi-linkedin"
+                className="bi bi-linkedin"
                 viewBox="0 0 16 16"
               >
                 <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z" />
@@ -213,14 +227,14 @@ const Signin = () => {
               <Link to="">Send Feedback </Link>
             </ul>
             <select className=" text-xs">
-              <option value="Language" selected>
+              <option value="Language" >
                 Language
               </option>
             </select>
           </nav>
         </footer>
       </div>
-    </div>
+    </main>
   );
 };
 

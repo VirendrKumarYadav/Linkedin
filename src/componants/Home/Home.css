@@ -1,0 +1,47 @@
+:root{
+    --bg-color:#F4F2EE;
+    --bg-input:#EDF3F8;
+    --logo-light-color:#0a66c2;
+    --navBg-light-color:#FFFFFF;
+}
+
+/* 
+home page
+ */
+
+ .home-container{
+    background-color: var(--bg-color);
+    
+ }
+/* Header  */
+.nav-container{ 
+    background-color: var(--navBg-light-color);
+}
+
+.logo-icon-dark{
+color: var(--bg-input);
+}
+.logo-icon-light{
+color: var(--logo-light-color);
+}
+.search-container{
+    background-color: var(--bg-input);
+}
+.input-search{
+    background-color: var(--bg-input);
+}
+
+.nav-icon{
+  font-size: 1.5rem;
+  color:rgba(14, 12, 12, 0.572)
+
+}
+.nav-icon:hover{
+  color:black !important;
+}
+.nav-icon-text:hover{
+  color:black !important;
+}
+.nav-icon-text{
+  font-size: small;
+}

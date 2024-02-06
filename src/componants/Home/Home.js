@@ -1,12 +1,12 @@
 import React from 'react'
+import Header from './Header'
 
 const Home = () => {
+
   return (
-    <div>
-          <h1>
-              This is the home page 
-              
-          </h1>
+    <div className='home-container h-screen w-screen'>
+      <Header />
+        
     </div>
   )
 }

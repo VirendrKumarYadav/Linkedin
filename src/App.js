@@ -3,10 +3,12 @@ import { API_Base } from "./API/API_Base";
 import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
 import { Store } from "./reducer/Store";
-import Home from './componants/Home/Home'
-import About from './componants/about/about'
-import Signin from './componants/Signin/Signin';
-import JoinIn from './componants/Signup/JoinIn';
+import {app} from '../src/firebase/firebase'
+import AuthProvider from "./firebase/AuthProvider";
+import { Router } from './routes/Router'
+ import { ToastContainer } from "react-toastify";
+ import "react-toastify/dist/ReactToastify.css";
+
 
 
 function App() {
@@ -23,36 +25,20 @@ useEffect(() => {
   })
     .then((json) => setData(json))
     .catch((err) => console.error("error:" + err));
-  console.log(data);
+     console.log(data);
  
 },[]);
 
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Home />,
-    },
-    {
-      path: "/about",
-      element: <About />,
-    },
-    {
-      path: "/signin",
-      element: <Signin />,
-    },
-    {
-      path: "/signup",
-      element: <JoinIn />,
-    },
-  ]);
+  
   
   return (
-    <Provider store={Store}>
-      <RouterProvider router={router}>
-        <h1>Hello App js</h1>
-      </RouterProvider>
-    </Provider>
+    <AuthProvider>
+      <Provider store={Store}>
+        <RouterProvider router={Router}></RouterProvider>
+        <ToastContainer/>
+      </Provider>
+    </AuthProvider>
   );
 }
 

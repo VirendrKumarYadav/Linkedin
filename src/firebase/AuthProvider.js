@@ -7,11 +7,9 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { onLog } from "firebase/app";
 
 
 const AuthContext = React.createContext();
-
 export function useAuthContext() {
   return useContext(AuthContext);
 }
@@ -21,8 +19,12 @@ function AuthProvider(props) {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
   
-  const signup = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+  const signUp = (email, password) => {
+    try {
+      return createUserWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      return err;
+    }
   };
 
   const signIn = (email, password) => {
@@ -39,16 +41,12 @@ function AuthProvider(props) {
   
 }
   
-
-
-
   const value = {
-    currentUser,
-    setCurrentUser,
-    signup,
+    signUp,
     signIn,
     sign_out,
     googleSignIn,
+   
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState ,useRef} from "react";
 import {
   BsLinkedin,
   BsSearch,
@@ -10,12 +10,22 @@ import { IoBagHandle } from "react-icons/io5";
 import { MdPeopleAlt } from "react-icons/md";
 import { BsPersonCircle,BsList} from "react-icons/bs"; 
 import { Link } from "react-router-dom";
-import "../Home.css";
+import "../../Home.css";
 import { useNavigate } from "react-router-dom";
 
-const Header = () => {
+const Header = (prop) => {
+
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const homeRef = useRef();
+  const networkRef = useRef();
+  const massageRef = useRef();
+  const profileRef = useRef();
+  const jobsRef = useRef();
+  const notificationRef = useRef();
+  
+
+
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
@@ -24,6 +34,16 @@ const Header = () => {
   const goToRoute = (rout) => {
     navigate(rout)
   }
+  useEffect(() => {
+  const currentURL = window.location.href;
+    if (currentURL.includes("home")) {
+      //  homeRef.current.children[0].className.animVal = "default-selected";
+      console.log(homeRef.current.children[0].className.animVal);
+    }
+
+
+  }, []);
+  
 
 
 
@@ -81,40 +101,58 @@ const Header = () => {
           >
             <ul className="flex">
               <Link to="/home" className="text-black px-4 py-2">
-                <span className="flex flex-col justify-center items-center">
-                  <BsHouseDoorFill className="nav-icon" />
+                <span
+                  ref={homeRef}
+                  className="flex flex-col justify-center items-center"
+                >
+                  <BsHouseDoorFill className="nav-icon default-selected" />
                   <span className="nav-icon-text"> Home</span>
                 </span>
               </Link>
               <Link to="/network" className="text-black px-4 py-2">
-                <span className="flex flex-col justify-center items-center">
+                <span
+                  ref={networkRef}
+                  className="flex flex-col justify-center items-center"
+                >
                   <MdPeopleAlt className="nav-icon" />
                   <span className="nav-icon-text"> My Network</span>
                 </span>
               </Link>
 
               <Link to="/jobs" className="text-black px-4 py-2">
-                <span className="flex flex-col justify-center items-center">
+                <span
+                  ref={jobsRef}
+                  className="flex flex-col justify-center items-center"
+                >
                   <IoBagHandle className="nav-icon" />
                   <span className="nav-icon-text"> Jobs</span>
                 </span>
               </Link>
               <Link to="/messaging" className="text-black px-4 py-2">
-                <span className="flex flex-col justify-center items-center">
+                <span
+                  ref={massageRef}
+                  className="flex flex-col justify-center items-center"
+                >
                   <BsFillChatDotsFill className="nav-icon" />
                   <span className="nav-icon-text"> Messaging</span>
                 </span>
               </Link>
               <Link to="/notifications" className="text-black px-4 py-2">
-                <span className="flex flex-col justify-center items-center">
+                <span
+                  ref={notificationRef}
+                  className="flex flex-col justify-center items-center"
+                >
                   <BsFillBellFill className="nav-icon" />
                   <span className="nav-icon-text"> Notification</span>
                 </span>
               </Link>
             </ul>
             <Link to="/me" className="text-black px-4 py-2">
-              <span className="flex flex-col justify-center items-center">
-                <BsPersonCircle className="nav-icon" />
+              <span
+                ref={profileRef}
+                className="flex flex-col justify-center items-center"
+              >
+                <BsPersonCircle className=" nav-icon  ${prop.clsName}" />
                 <span className="nav-icon-text">Me</span>
               </span>
             </Link>

@@ -5,22 +5,26 @@ import "./joinin.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import GoogleButton from "react-google-button";
+import { loggedIn } from "../../API/FireStore";
 
 
-const Signup = (e) => {
+const Signup = (prop) => {
   const auth = useAuthContext();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
        e.preventDefault();
     try {
-     await auth.signUp(email, password);
+    const res= await auth.signUp(email, password);
       toast.success("Created LinkedIn account.");
-      // navigate("/home");
      
+      navigate("/home");
+      localStorage.setItem("userEmail", res.user.email);
+         prop.setUsername(username);
+       loggedIn({ name: username, userEmail: res.user.email });
     } catch (e) {
       console.error(e);
       toast.error("Please check your email & password");
@@ -31,9 +35,12 @@ const Signup = (e) => {
   const onGoogleLogin = async (e) => {
       e.preventDefault();
     try {
-     await auth.googleSignIn();
+    const res= await auth.googleSignIn();
       toast.success("Created LinkedIn account with Google");
-      //  navigate("/home");
+      localStorage.setItem("userEmail", res.user.email);
+      loggedIn({ name: username, userEmail: res.user.email });
+       navigate("/home");
+
      
     } catch (e) {
       console.error(e);
@@ -69,6 +76,25 @@ const Signup = (e) => {
             onSubmit={handleSubmit}
             className="lg:w-96 bg-white p-5 py-7 rounded-lg mt-6 text-gray-600 "
           >
+            <div className="mb-4">
+              <label
+                htmlFor="email"
+                className="block text-gray-600 font-medium"
+              >
+                Username
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={username}
+                autoComplete="true"
+              
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full px-6 py-1 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+                required
+              />
+            </div>
             <div className="mb-4">
               <label
                 htmlFor="email"
@@ -179,9 +205,7 @@ const Signup = (e) => {
             <Link to="">Community Guidelines</Link>
           </ul>
           <select className=" text-xs">
-            <option value="Language" >
-              Language
-            </option>
+            <option value="Language">Language</option>
           </select>
         </nav>
       </footer>

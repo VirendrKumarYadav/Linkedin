@@ -65,35 +65,35 @@ const Home = () => {
           <div className="hidden md:flex md:items-center">
             <nav className="flex items-center space-x-4">
               <Link
-                to="/"
+                to="https://www.linkedin.com/pulse/topics/home/?trk=guest_homepage-basic_guest_nav_menu_articles"
                 className="flex flex-col items-center text-gray-500 hover:text-gray-600"
               >
                 <FaNewspaper size={25} />
                 <p className="text-xs">Articles</p>
               </Link>
               <Link
-                to="/"
+                to="https://www.linkedin.com/pub/dir/+/+?trk=content-hub-home-page_guest_nav_menu_people"
                 className="flex flex-col items-center text-gray-500 hover:text-gray-600"
               >
                 <MdPeopleAlt size={25} />
                 <p className="text-xs">People</p>
               </Link>
               <Link
-                to="/"
+                to="https://www.linkedin.com/learning/search?trk=content-hub-home-page_guest_nav_menu_learning"
                 className="flex flex-col items-center text-gray-500 hover:text-gray-600"
               >
                 <GoVideo size={25} />
                 <p className="text-xs">Learning</p>
               </Link>
               <Link
-                to="/"
+                to="https://www.linkedin.com/jobs/search?trk=content-hub-home-page_guest_nav_menu_jobs&position=1&pageNum=0"
                 className="flex flex-col items-center text-gray-500 hover:text-gray-600"
               >
                 <IoBagHandle size={25} />
                 <p className="text-xs">Jobs</p>
               </Link>
               <Link
-                to="/"
+                to="https://www.linkedin.com/"
                 className="flex flex-col items-center text-gray-500 hover:text-gray-600"
               >
                 <MdOutlineLaptopMac size={25} />

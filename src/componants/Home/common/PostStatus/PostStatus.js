@@ -1,21 +1,37 @@
 import React, { useState, useMemo, useEffect } from "react";
 import "./postStatus.css";
 import ModalComponant from "../Modal/ModalComponant";
-import { postStatus, getPosts } from "../../../../API/FireStore";
-import { all } from "axios";
+import {
+  postStatus,
+  getPosts,
+  getCurrentUserData,
+} from "../../../../API/FireStore";
 import PostCard from "../../../Element/PostCard/PostCard";
 import { getCurrentTimeStamp } from "../../../Element/getTimeStamp/getTimeCurrent";
+import { getUniqueId } from "../../../Element/getTimeStamp/UniqueId";
 
 const PostStatus = () => {
+  const userEmail = localStorage.getItem("userEmail");
   const [modalOpen, setModalOpen] = useState(false);
   const [status, setStatus] = useState("");
   const [allStatus, setAllStatus] = useState([]);
+  const [username, setUsername] = useState("");
+  getCurrentUserData()
+    .then((values) => {
+      setUsername(values.name);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 
   const createPost = async () => {
     let obj = {
       status: status,
-      timestamp:getCurrentTimeStamp("LLL")
-    }
+      timestamp: getCurrentTimeStamp("LLL"),
+      userEmail: userEmail,
+      username: username,
+      id: getUniqueId(),
+    };
     await postStatus(obj);
   };
 
@@ -28,7 +44,7 @@ const PostStatus = () => {
     fetchData();
   }, []);
 
-  console.log(allStatus);
+  // console.log(allStatus);
 
   return (
     <div className="flex justify-center items-center flex-col">
@@ -47,11 +63,9 @@ const PostStatus = () => {
         />
       }
 
-      <div className="posts flex flex-col my-3">
+      <div className="posts flex flex-col my-3 w-full justify-center items-center">
         {Array.isArray(allStatus) && allStatus.length > 0 ? (
-          allStatus.map((posts) => (
-            <PostCard data={posts}></PostCard>
-          ))
+          allStatus.map((posts) => <PostCard data={posts}></PostCard>)
         ) : (
           <p>No posts available</p>
         )}

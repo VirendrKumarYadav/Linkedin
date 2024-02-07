@@ -45,3 +45,6 @@ color: var(--logo-light-color);
 .nav-icon-text{
   font-size: small;
 }
+.default-selected{
+  color: black;
+}

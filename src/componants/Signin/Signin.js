@@ -4,7 +4,7 @@ import { Link,useNavigate } from "react-router-dom";
 import { useAuthContext } from '../../firebase/AuthProvider';
 import GoogleButton from "react-google-button";
 import { toast } from "react-toastify";
-import Loader from "../LoadingConfig/Loader";
+import ConfigLoading from "../LoadingConfig/ConfigLoading";
 
 
 const Signin = () => {
@@ -20,10 +20,11 @@ const Signin = () => {
        const response = await auth.signIn(email, password);
        console.log(response);
        // Signed in
-       toast.success("Created LinkedIn account.");
+       toast.success("Logged in Successfully!");
      
      } catch (err) {
        console.error(err);
+       toast.error("Invalid UserName & Password")
      }
   };
   const signClicked = async (e) => {

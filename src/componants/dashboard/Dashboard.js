@@ -7,132 +7,187 @@ import { MdOutlineLaptopMac } from "react-icons/md";
 import { FaNewspaper } from "react-icons/fa";
 import Button from '../Element/button/Button'
 import { useAuthContext } from "../../firebase/AuthProvider";
+import { toast } from "react-toastify";
+import GoogleButton from "react-google-button";
 
 const Home = () => {
   const auth = useAuthContext();
    const [email, setEmail] = useState("");
-   const [password, setPassword] = useState("");
-  const handleSubmit = () => {
-     
-   };
+  const [password, setPassword] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
+  
+ const handleSubmit = async (e) => {
+   e.preventDefault();
+   try {
+     const response = await auth.signIn(email, password);
+     console.log(response);
+     // Signed in
+     toast.success("Logged in Successfully!");
+   } catch (err) {
+     console.error(err);
+     toast.error("Invalid UserName & Password");
+   }
+ };
+  
+  const onGoogleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await auth.googleSignIn();
+      toast.success("Logged In with Google");
+      //  navigate("/home");
+    } catch (e) {
+      console.error(e);
+      toast.error("Email Id Invalid");
+    }
+  };
   return (
     <div>
-      <header className="head-container w-screen flex justify-center my-3">
-        <nav className="flex head-nav justify-between w-5/6">
-          <div className="logo-contaner my-3">
-            <span className="logo-linkdin flex flex-row items-center gap-1">
-              <p className="logo-name font-mono font-bold text-3xl">Linked</p>
+      <header className="w-full bg-white py-4">
+        <div className="container logo-contaner mx-auto flex justify-between items-center px-4">
+          <div className="flex items-center">
+            <Link
+              to="/"
+              className="logo-linkdin flex items-center text-gray-900"
+            >
+              <p className="logo-name font-bold text-3xl">Linked</p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="30"
                 height="30"
                 fill="currentColor"
-                className="bi bi-linkedin"
+                className="bi bi-linkedin ml-1"
                 viewBox="0 0 16 16"
               >
                 <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z" />
               </svg>
-            </span>
+            </Link>
           </div>
-          <div>
-            <ul className="flex flex-row justify-between gap-9">
+          <div className="hidden md:flex md:items-center">
+            <nav className="flex items-center space-x-4">
               <Link
-                to=""
-                className=" flex justify-center items-center flex-col text-gray-500 hover:text-gray-600"
+                to="/"
+                className="flex flex-col items-center text-gray-500 hover:text-gray-600"
               >
                 <FaNewspaper size={25} />
-                <p className="text-xs">Articals</p>
+                <p className="text-xs">Articles</p>
               </Link>
               <Link
-                to=""
-                className="flex justify-center items-center flex-col text-gray-500 hover:text-gray-600"
+                to="/"
+                className="flex flex-col items-center text-gray-500 hover:text-gray-600"
               >
-                <MdPeopleAlt size={20} />
+                <MdPeopleAlt size={25} />
                 <p className="text-xs">People</p>
               </Link>
               <Link
-                to=""
-                className="flex justify-center items-center flex-col text-gray-500 hover:text-gray-600"
+                to="/"
+                className="flex flex-col items-center text-gray-500 hover:text-gray-600"
               >
-                <GoVideo size={20} />
+                <GoVideo size={25} />
                 <p className="text-xs">Learning</p>
               </Link>
               <Link
-                to=""
-                className="flex justify-center items-center flex-col text-gray-500 hover:text-gray-600"
+                to="/"
+                className="flex flex-col items-center text-gray-500 hover:text-gray-600"
               >
-                <IoBagHandle size={20} />
+                <IoBagHandle size={25} />
                 <p className="text-xs">Jobs</p>
               </Link>
               <Link
-                to=""
-                className="flex justify-center items-center flex-col text-gray-500 hover:text-gray-600 w-20"
+                to="/"
+                className="flex flex-col items-center text-gray-500 hover:text-gray-600"
               >
-                <MdOutlineLaptopMac size={20} />
+                <MdOutlineLaptopMac size={25} />
                 <p className="text-xs">Get the app</p>
               </Link>
-              <Link
-                to="/signup"
-                className="link-container  w-32 h-10 justify-center items-center "
-              >
-                <a
-                  href="#_"
-                  class="relative inline-flex items-center justify-center p-4 px-6 py-3 overflow-hidden font-medium text-blue-400 transition duration-300 ease-out   rounded-full hover:bg-gray-100 group"
-                >
-                  <span class="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full  group-hover:translate-x-0 ease"></span>
-                  <span class="absolute flex items-center justify-center w-full h-full text-gray-500 ">
-                    Join now
-                  </span>
-                  <span class="relative invisible"> Join now</span>
-                </a>
-              </Link>
-              <Link
-                to="/signin"
-                className="link-container w-32 h-10 justify-center items-center "
-              >
-                <a
-                  href="#_"
-                  class="relative inline-flex items-center justify-center p-4 px-6 py-3 overflow-hidden font-medium transition duration-300 ease-out border-2  rounded-full shadow-md group"
-                  style={{ borderColor: "#0a66c2" }}
-                >
-                  <span
-                    style={{ backgroundColor: "#0a66c2" }}
-                    class="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full  group-hover:translate-x-0 ease"
-                  >
-                    <svg
-                      className="w-6 h-6"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M14 5l7 7m0 0l-7 7m7-7H3"
-                      ></path>
-                    </svg>
-                  </span>
-                  <span
-                    style={{ color: "#0a66c2" }}
-                    class="absolute flex items-center justify-center w-full h-full  transition-all duration-300 transform group-hover:translate-x-full ease"
-                  >
-                    Sign in
-                  </span>
-                  <span class="relative invisible"> Sign in</span>
-                </a>
-              </Link>
-            </ul>
+            </nav>
           </div>
-        </nav>
+          <div className="md:hidden">
+            <button
+              className="focus:outline-none"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-gray-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                {menuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h16m-7 6h7"
+                  />
+                )}
+              </svg>
+            </button>
+          </div>
+        </div>
+        {/* Mobile Menu */}
+        {menuOpen && (
+          <div className="md:hidden">
+            <nav className="bg-white py-2 px-4">
+              <ul className="space-y-2">
+                <li>
+                  <Link
+                    to="/"
+                    className="block text-gray-500 hover:text-gray-600"
+                  >
+                    Articles
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/"
+                    className="block text-gray-500 hover:text-gray-600"
+                  >
+                    People
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/"
+                    className="block text-gray-500 hover:text-gray-600"
+                  >
+                    Learning
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/"
+                    className="block text-gray-500 hover:text-gray-600"
+                  >
+                    Jobs
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/"
+                    className="block text-gray-500 hover:text-gray-600"
+                  >
+                    Get the app
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        )}
       </header>
-      <main>
-        <section className="hero flex flex-row ml-28 justify-between items-center">
-          <div className="left w-3/6 mt-8 flex flex-col justify-center">
+      <main className="mx-auto max-w-7xl px-4">
+        <section className="hero flex flex-col md:flex-row justify-between items-center px-4 md:ml-28 md:mr-0">
+          <div className="left md:w-3/6 mt-8 flex flex-col justify-center">
             <div>
               <p
-                className="text-6xl font-sans font-thin label"
+                className="text-4xl md:text-6xl font-sans font-thin label text-center md:text-left"
                 style={{ color: "#b24020" }}
               >
                 Discover what your network can do for you
@@ -140,7 +195,7 @@ const Home = () => {
             </div>
             <form
               onSubmit={handleSubmit}
-              className=" lg:w-8/12 bg-white p-5 py-7 rounded-lg my-6 text-gray-600 "
+              className="mt-6 md:mt-8 lg:w-8/12 bg-white p-5 py-7 rounded-lg my-6 text-gray-600"
             >
               <div className="mb-6">
                 <label
@@ -206,31 +261,16 @@ const Home = () => {
               </div>
 
               <div className="signin-container flex flex-col gap-9">
-                <div className="flex justify-center items-center border-2 rounded-full p-1 hover:border-gray-600 ">
-                  <div className="flex justify-between items-center gap-x-3 w-11/12">
-                    <div className="flex gap-x-2 px-3">
-                      <img
-                        src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/google-color-icon.png"
-                        className="rounded-full"
-                        width={"20"}
-                        height={"20"}
-                      ></img>
-
-                      <p className="text-xs  gap-0 font-bold text-gray-600">
-                        Continue as a Virendra
-                        <br></br>
-                        <span className="text-xs font-thin">
-                          softech.vire@gmail.com
-                        </span>
-                      </p>
-                    </div>
-
-                    <img
-                      src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/google-color-icon.png"
-                      className="rounded-full "
-                      width={"20"}
-                    ></img>
-                  </div>
+                <div className="flex justify-center items-center ">
+                  <GoogleButton
+                    onClick={onGoogleLogin}
+                    className="rounded-full "
+                    style={{
+                      display: "block",
+                      border: "none",
+                      cursor: "pointer",
+                    }}
+                  />
                 </div>
                 <div className="flex justify-center items-center border-2 rounded-full p-1 hover:border-gray-600">
                   <div className="flex gap-x-2 px-3 py-1 justify-center items-center">
@@ -243,27 +283,35 @@ const Home = () => {
                   </div>
                 </div>
               </div>
+
+              {/* Form Inputs */}
             </form>
+            {/* Sign In Options */}
           </div>
-          <div className="right mt-32">
-            <img src="https://media.licdn.com/media//AAYAAgSrAAgAAQAAAAAAAGM6w-NyPk-_SVikYiCJ6V3Z-Q.png"></img>
+          <div className="right mt-6 md:mt-32 md:w-3/6 md:ml-10">
+            <img
+              src="https://media.licdn.com/media//AAYAAgSrAAgAAQAAAAAAAGM6w-NyPk-_SVikYiCJ6V3Z-Q.png"
+              alt="LinkedIn Logo"
+              className="mx-auto md:mx-0"
+            />
           </div>
         </section>
-        <section className="flex flex-row ml-28 justify-center items-center mb-5">
-          <div className="left  w-3/6 ">
-            <p className="text-5xl mb-4 font-sans font-thin label text-gray-700 leading-tight">
+        <section className="flex flex-col md:flex-row ml-4 md:ml-28 justify-center items-center mb-5">
+          <div className="left md:w-3/6 mb-4 md:mb-0 md:mr-10">
+            <p className="text-4xl md:text-5xl font-sans font-thin label text-gray-700 leading-tight text-center md:text-left">
               Explore collaborative articles
             </p>
-            <span className=" text-gray-500 text-xl font-thin">
+            <span className="text-gray-500 text-base md:text-xl font-thin text-center md:text-left block md:inline-block mt-2 md:mt-0">
               We’re unlocking community knowledge in a new way. Experts add
               insights directly into each article, started with the help of AI.
             </span>
           </div>
-          <div className="right ml-24">
-            <h1 className="uppercase font-semibold text-gray-500 mb-3">
+          <div className="right md:ml-24">
+            <h1 className="uppercase font-semibold text-gray-500 mb-3 text-center md:text-left">
               SUGGESTED SEARCHES
             </h1>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 justify-center md:justify-start">
+              {/* Your Button Components */}
               <Button name="Engineering" />
               <Button name="Business Development" />
               <Button name="Administrative Assistant" />
@@ -277,17 +325,18 @@ const Home = () => {
             </div>
           </div>
         </section>
-        <section className="flex flex-row ml-28 justify-start items-center mb-5">
-          <div className="left  w-3/6 ">
-            <p className="text-5xl mb-4 font-sans font-thin label text-gray-700 leading-tight">
+        <section className="flex flex-col md:flex-row ml-4 md:ml-28 justify-center items-center mb-5">
+          <div className="left md:w-3/6 mb-4 md:mb-0 md:mr-10">
+            <p className="text-4xl md:text-5xl font-sans font-thin label text-gray-700 leading-tight text-center md:text-left">
               Find the right job or internship for you
             </p>
           </div>
-          <div className="right ml-24">
-            <h1 className="uppercase font-semibold text-gray-500 mb-3">
+          <div className="right md:ml-24">
+            <h1 className="uppercase font-semibold text-gray-500 mb-3 text-center md:text-left">
               SUGGESTED SEARCHES
             </h1>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 justify-center md:justify-start">
+              {/* Your Button Components */}
               <Button name="Engineering" />
               <Button name="Business Development" />
               <Button name="Administrative Assistant" />
@@ -301,31 +350,30 @@ const Home = () => {
             </div>
           </div>
         </section>
-        <section
-          className="flex flex-row justify-start items-center mb-5 gap-5 w-full py-24 "
-          style={{ backgroundColor: "#F1ECE5" }}
-        >
-          <div className="ml-28 w-96  leading-normal">
-            <p className="text-4xl " style={{ color: "#b24020" }}>
+
+        <section className="flex flex-col md:flex-row justify-center items-center mb-5 gap-5 w-full py-12 md:py-24 bg-gray-100 md:bg-F1ECE5">
+          <div className="ml-4 md:ml-28 w-full md:w-96 leading-normal text-center md:text-left">
+            <p className="text-3xl md:text-4xl" style={{ color: "#b24020" }}>
               Post your job for millions of people to see
             </p>
           </div>
-          <div>
+          <div className="mt-4 md:mt-0">
             <Button name="Post a Job" color="#0a66c2" bordercolor="#0a66c2" />
           </div>
         </section>
-        <section className="flex flex-row ml-28 justify-start items-center mb-5">
-          <div className="left  w-3/6 ">
-            <p className="text-5xl mb-4 font-sans font-thin label text-gray-700 leading-tight">
+
+        <section className="flex flex-col md:flex-row ml-4 md:ml-28 justify-center md:justify-start items-center mb-5">
+          <div className="left w-full md:w-3/6 text-center md:text-left">
+            <p className="text-3xl md:text-5xl mb-4 font-sans font-thin label text-gray-700 leading-tight">
               Discover the best software tools
             </p>
-            <span className=" text-gray-500 text-xl font-thin">
+            <span className="text-gray-500 text-base md:text-xl font-thin">
               Connect with buyers who have first-hand experience to find the
               best products for you.
             </span>
           </div>
 
-          <div className="right ml-24">
+          <div className="right mt-4 md:mt-0 ml-4 md:ml-24">
             <h1 className="uppercase font-semibold text-gray-500 mb-3">
               SUGGESTED SEARCHES
             </h1>
@@ -333,8 +381,8 @@ const Home = () => {
               <Button name="Engineering" />
               <Button name="Business Development" />
               <Button name="Administrative Assistant" />
-              <Button name="Reail Associate" />
-              <Button name="Customers Services " />
+              <Button name="Retail Associate" />
+              <Button name="Customers Services" />
               <Button name="Operations" />
               <Button name="Information Technology" />
               <Button name="Marketing" />

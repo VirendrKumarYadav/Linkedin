@@ -7,7 +7,8 @@ import {app} from '../src/firebase/firebase'
 import AuthProvider from "./firebase/AuthProvider";
 import { Router } from './routes/Router'
  import { ToastContainer } from "react-toastify";
- import "react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.css";
+ import ConfigLoading from './componants/LoadingConfig/ConfigLoading';
 
 
 
@@ -18,14 +19,14 @@ function App() {
 //  fetch API data
   
 useEffect(() => {
-  API_Base("https://api.themoviedb.org/3/movie/changes", {
-    page: 1,
-    language: "en-US",
-    sort_by: "created_at.asc",
-  })
-    .then((json) => setData(json))
-    .catch((err) => console.error("error:" + err));
-     console.log(data);
+//   API_Base("https://api.themoviedb.org/3/movie/changes", {
+//     page: 1,
+//     language: "en-US",
+//     sort_by: "created_at.asc",
+//   })
+//     .then((json) => setData(json))
+//     .catch((err) => console.error("error:" + err));
+//      console.log(data);
  
 },[]);
 

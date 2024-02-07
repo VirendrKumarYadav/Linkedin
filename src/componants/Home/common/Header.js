@@ -1,16 +1,32 @@
 import React, { useState } from "react";
-import { BsLinkedin, BsSearch, BsHouseDoorFill ,BsFillChatDotsFill,BsFillBellFill} from "react-icons/bs";
+import {
+  BsLinkedin,
+  BsSearch,
+  BsHouseDoorFill,
+  BsFillChatDotsFill,
+  BsFillBellFill,
+} from "react-icons/bs";
 import { IoBagHandle } from "react-icons/io5";
-
 import { MdPeopleAlt } from "react-icons/md";
+import { BsPersonCircle,BsList} from "react-icons/bs"; 
 import { Link } from "react-router-dom";
-import "./Home.css";
+import "../Home.css";
+import { useNavigate } from "react-router-dom";
+
 const Header = () => {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
+
+  const goToRoute = (rout) => {
+    navigate(rout)
+  }
+
+
+
   return (
     <header>
       <nav className="nav-container p-2">
@@ -21,15 +37,19 @@ const Header = () => {
             <div className="search-container flex p-1 justify-center items-center gap-2 rounded-lg">
               <BsSearch className="" />
               <input
-                placeholder="Serach"
-                className=" input-search w-64 max-w-64"
-              ></input>
+                placeholder="Search"
+                className="input-search max-lg-w-64 flex-wrap lg:pr-28"
+              />
             </div>
           </div>
           <a href="/" className="text-white text-2xl font-bold"></a>
 
           {/* Menu icon for mobile */}
-          <div className="block lg:hidden">
+          <div className="block lg:hidden max-lg:flex max-lg:ml-3 max-lg:justify-center max-lg:items-center">
+            <button>
+              {" "}
+              <BsList className="max-lg:block hidden nav-icon" />
+            </button>
             <button
               onClick={toggleNavbar}
               className="text-white focus:outline-none"
@@ -53,56 +73,51 @@ const Header = () => {
           </div>
 
           {/* Menu items */}
+          {}
           <div
             className={`lg:flex lg:items-center lg:w-auto ${
               isOpen ? "block" : "hidden"
             }`}
           >
-            <ul className="flex ">
-              <Link to="" className="text-black px-4 py-2">
-                {" "}
-                <span className=" flex flex-col justify-center items-center">
+            <ul className="flex">
+              <Link to="/home" className="text-black px-4 py-2">
+                <span className="flex flex-col justify-center items-center">
                   <BsHouseDoorFill className="nav-icon" />
                   <span className="nav-icon-text"> Home</span>
                 </span>
               </Link>
-              <Link to="" className="text-black px-4 py-2">
-                {" "}
-                <span className=" flex flex-col justify-center items-center">
+              <Link to="/network" className="text-black px-4 py-2">
+                <span className="flex flex-col justify-center items-center">
                   <MdPeopleAlt className="nav-icon" />
                   <span className="nav-icon-text"> My Network</span>
                 </span>
               </Link>
 
-              <Link to="" className="text-black px-4 py-2">
-                {" "}
-                <span className=" flex flex-col justify-center items-center">
+              <Link to="/jobs" className="text-black px-4 py-2">
+                <span className="flex flex-col justify-center items-center">
                   <IoBagHandle className="nav-icon" />
                   <span className="nav-icon-text"> Jobs</span>
                 </span>
               </Link>
-              <Link to="" className="text-black px-4 py-2">
-                {" "}
-                <span className=" flex flex-col justify-center items-center">
+              <Link to="/messaging" className="text-black px-4 py-2">
+                <span className="flex flex-col justify-center items-center">
                   <BsFillChatDotsFill className="nav-icon" />
-                  <span className="nav-icon-text"> Massaging</span>
+                  <span className="nav-icon-text"> Messaging</span>
                 </span>
               </Link>
-              <Link to="" className="text-black px-4 py-2">
-                {" "}
-                <span className=" flex flex-col justify-center items-center">
+              <Link to="/notifications" className="text-black px-4 py-2">
+                <span className="flex flex-col justify-center items-center">
                   <BsFillBellFill className="nav-icon" />
                   <span className="nav-icon-text"> Notification</span>
                 </span>
               </Link>
-              <Link to="" className="text-black px-4 py-2">
-                {" "}
-                <span className=" flex flex-col justify-center items-center">
-                  <img className="nav-icon" src=""></img>
-                  <span className="nav-icon-text">Me</span>
-                </span>
-              </Link>
             </ul>
+            <Link to="/me" className="text-black px-4 py-2">
+              <span className="flex flex-col justify-center items-center">
+                <BsPersonCircle className="nav-icon" />
+                <span className="nav-icon-text">Me</span>
+              </span>
+            </Link>
           </div>
         </div>
       </nav>

@@ -13,9 +13,10 @@ export default function ConfigLoading ()  {
 
     useEffect(() => {
         onAuthStateChanged(auth, (res) => {
+            console.log(res);
             if (!res?.accessToken) {
                 console.log("Access token");
-            //    navigate("/home")
+               navigate("/home")
             } else {
                 setLoading(false)
            }

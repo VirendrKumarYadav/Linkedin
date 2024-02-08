@@ -10,11 +10,14 @@ import Job from "../componants/Job/Job";
 import Massaging from "../componants/Massaging/Massaging";
 import MyNetwork from "../componants/MyNetwork/Mynetwork";
 import Header from "../componants/Home/common/Header/Header";
+import SigninNav from "../PagesNav/Login";
+import SignupNav from "../PagesNav/Joinin";
+import DashboardNav from "../PagesNav/Dashboard";
 
 export const Router = createBrowserRouter([
   {
     path: "/",
-    element: <Dashboard />,
+    element: <DashboardNav />,
   },
   {
     path: "/about",
@@ -22,11 +25,11 @@ export const Router = createBrowserRouter([
   },
   {
     path: "/signin",
-    element: <Signin />,
+    element: <SigninNav />,
   },
   {
     path: "/signup",
-    element: <JoinIn />,
+    element: <SignupNav />,
   },
   {
     path: "/home",

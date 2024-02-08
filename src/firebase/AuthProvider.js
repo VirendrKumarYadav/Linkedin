@@ -46,7 +46,6 @@ function AuthProvider(props) {
     signIn,
     sign_out,
     googleSignIn,
-   
   };
 
   return (

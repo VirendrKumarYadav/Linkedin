@@ -6,17 +6,17 @@ import Loader from "../componants/LoadingConfig/Loader";
 import Signup from "../componants/Signup/JoinIn";
 import Dashboard from "../componants/dashboard/Dashboard";
 
-export default function SignupNav(prop) {
+export default function DashboardNav(prop) {
   const [loading, setLoading] = useState(true);
   let navigate = useNavigate();
   useEffect(() => {
     onAuthStateChanged(auth, (res) => {
       if (res?.accessToken) {
-        navigate("/signup");
+        navigate("/home");
       } else {
         setLoading(false);
       }
     });
   }, []);
-  return loading ? <Loader /> : <Signup />;
+  return loading ? <Loader /> : <Dashboard />;
 }

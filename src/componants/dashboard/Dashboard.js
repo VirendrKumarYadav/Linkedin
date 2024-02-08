@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdPeopleAlt } from "react-icons/md";
 import { GoVideo } from "react-icons/go";
 import { IoBagHandle } from "react-icons/io5";
@@ -10,7 +10,8 @@ import { useAuthContext } from "../../firebase/AuthProvider";
 import { toast } from "react-toastify";
 import GoogleButton from "react-google-button";
 
-const Home = () => {
+const Dashboard = () => {
+  const navigate =useNavigate()
   const auth = useAuthContext();
    const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,9 +21,9 @@ const Home = () => {
    e.preventDefault();
    try {
      const response = await auth.signIn(email, password);
-     console.log(response);
      // Signed in
      toast.success("Logged in Successfully!");
+    navigate("/home");
    } catch (err) {
      console.error(err);
      toast.error("Invalid UserName & Password");
@@ -34,7 +35,7 @@ const Home = () => {
     try {
       await auth.googleSignIn();
       toast.success("Logged In with Google");
-      //  navigate("/home");
+       navigate("/home");
     } catch (e) {
       console.error(e);
       toast.error("Email Id Invalid");
@@ -396,4 +397,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Dashboard;

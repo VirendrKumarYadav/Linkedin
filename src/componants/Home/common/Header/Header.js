@@ -1,4 +1,4 @@
-import React, { useEffect, useState ,useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   BsLinkedin,
   BsSearch,
@@ -8,44 +8,42 @@ import {
 } from "react-icons/bs";
 import { IoBagHandle } from "react-icons/io5";
 import { MdPeopleAlt } from "react-icons/md";
-import { BsPersonCircle,BsList} from "react-icons/bs"; 
+import { BsPersonCircle, BsList } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import "../../Home.css";
 import { useNavigate } from "react-router-dom";
+import Logout from "../../../Element/Logout/Logout";
 
 const Header = (prop) => {
-
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+
   const homeRef = useRef();
   const networkRef = useRef();
   const massageRef = useRef();
   const profileRef = useRef();
   const jobsRef = useRef();
   const notificationRef = useRef();
-  
 
-
+  const LogoutClick = () => {
+    setIsOpen(true);
+  };
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
 
   const goToRoute = (rout) => {
-    navigate(rout)
-  }
+    navigate(rout);
+  };
+
   useEffect(() => {
-  const currentURL = window.location.href;
+    const currentURL = window.location.href;
     if (currentURL.includes("home")) {
       //  homeRef.current.children[0].className.animVal = "default-selected";
-      console.log(homeRef.current.children[0].className.animVal);
+      // console.log(homeRef.current.children[0].className.animVal);
     }
-
-
   }, []);
-  
-
-
 
   return (
     <header>
@@ -147,14 +145,16 @@ const Header = (prop) => {
                 </span>
               </Link>
             </ul>
-            <Link to="/me" className="text-black px-4 py-2">
+            <Link to="/profile" className="text-black px-4 py-2">
               <span
                 ref={profileRef}
+                onClick={LogoutClick}
                 className="flex flex-col justify-center items-center"
               >
-                <BsPersonCircle className=" nav-icon  ${prop.clsName}" />
+                <BsPersonCircle className=" nav-icon" />
                 <span className="nav-icon-text">Me</span>
               </span>
+              <Logout id="logout" isOpen={isOpen} setIsOpen={setIsOpen} />
             </Link>
           </div>
         </div>

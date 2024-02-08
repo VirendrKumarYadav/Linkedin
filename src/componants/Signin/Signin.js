@@ -20,7 +20,7 @@ const Signin = () => {
        const response = await auth.signIn(email, password);
        console.log(response);
        // Signed in
-       toast.success("Logged in Successfully!");
+       toast.success("Log in Successfully!");
      
      } catch (err) {
        console.error(err);
@@ -33,7 +33,7 @@ const Signin = () => {
      const response = await auth.signIn(email, password);
      console.log(response);
      // Signed in
-     toast.success("Created LinkedIn account.");
+     toast.success("Log in Successfully!");
      // ...
 
    } catch (err) {

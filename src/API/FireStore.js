@@ -35,7 +35,7 @@ export const loggedIn = (prop) => {
     });
 };
 
-export const getCurrentUserData = ( prop) => {
+export const getCurrentUserData = ( ) => {
   const currentEmail = localStorage.getItem("userEmail");
   return new Promise((resolve, reject) => {
     onSnapshot(

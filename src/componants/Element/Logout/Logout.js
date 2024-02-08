@@ -1,29 +1,74 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { sign_out } from "../../../firebase/";
-import { getCurrentUser } from "../../../api/FirestoreAPI";
-import Button from "../Button";
-import "./index.scss";
+import { useAuthContext } from "../../../firebase/AuthProvider";
+import { getCurrentUserData } from "../../../API/FireStore";
+import { toast } from "react-toastify";
 
-export default function ProfilePopup() {
+export default function ProfilePopup(prop) {
+  const auth = useAuthContext();
   let navigate = useNavigate();
-  const [currentUser, setCurrentUser] = useState({});
-  useMemo(() => {
-    getCurrentUser(setCurrentUser);
-  }, []);
+  const [currentUserData, setCurrentUser] = useState({});
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  useEffect(() => {
+    fetchUserdat();
+  }, [prop]);
+
+  const handleLogout = async () => {
+    setIsLoggingOut(true);
+    await auth.sign_out(auth);
+    toast.success("Logout successfully");
+    navigate("/");
+  };
+
+  const fetchUserdat = (async () => {
+    const userData = await getCurrentUserData()
+      .then((currentUser) => {
+        setCurrentUser(currentUser);
+        return currentUser;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+ 
+    //  setCurrentUser(userData);
+  });
+
   return (
-    <div className="popup-card">
-      <p className="name"></p>
-      <p className="headline"></p>
-      <Button
-        title="View Profile"
-        onClick={() =>
-          navigate("/profile", {
-            state: {},
-          })
-        }
-      />
-      <Button title="Log out" onClick={()=>sign_out()} />
+    <div
+      className={`fixed inset-0 flex items-center justify-center ${
+        prop.isOpen ? "block" : "hidden"
+      }`}
+    >
+      <div className="absolute inset-0 z-1 bg-gray-800 opacity-50"></div>
+      <div className="bg-white p-6 rounded-lg shadow-lg z-10">
+        <h2 className="text-lg font-semibold mb-4">Logout Confirmation</h2>
+        <h1 className="text-xl mb-1 text-blue-500 font-thin">
+          {currentUserData?.name}
+        </h1>
+        <h1 className="text-xs mb-4 text-black font-thin">
+          {currentUserData?.userEmail}
+        </h1>
+        
+        <p className="text-gray-700 mb-4">Are you sure you want to log out?</p>
+        <div className="flex justify-end">
+          <button
+            className="px-4 py-2 mr-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded"
+            onClick={() => prop.setIsOpen(false)}
+          >
+            Cancel
+          </button>
+          <button
+            className={`px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded ${
+              isLoggingOut ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            onClick={handleLogout}
+            disabled={isLoggingOut}
+          >
+            {isLoggingOut ? "Logging Out..." : "Logout"}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

@@ -20,7 +20,7 @@ const Signup = (prop) => {
     try {
     const res= await auth.signUp(email, password);
       toast.success("Created LinkedIn account.");
-     
+
       navigate("/home");
       localStorage.setItem("userEmail", res.user.email);
          prop.setUsername(username);
@@ -39,8 +39,7 @@ const Signup = (prop) => {
       toast.success("Created LinkedIn account with Google");
       localStorage.setItem("userEmail", res.user.email);
       loggedIn({ name: username, userEmail: res.user.email });
-       navigate("/home");
-
+      navigate("/home");
      
     } catch (e) {
       console.error(e);

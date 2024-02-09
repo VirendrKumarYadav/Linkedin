@@ -36,12 +36,12 @@ export default function ProfilePopup(prop) {
 
   return (
     <div
-      className={`fixed inset-0 flex items-center justify-center ${
+      className={`fixed inset-0 flex items-center z-30 justify-center ${
         prop.isOpen ? "block" : "hidden"
       }`}
     >
-      <div className="absolute inset-0 z-1 bg-gray-800 opacity-50"></div>
-      <div className="bg-white p-6 rounded-lg shadow-lg z-10">
+      <div className="absolute inset-0 z-20 bg-gray-800 opacity-50"></div>
+      <div className="bg-white p-6 rounded-lg shadow-lg z-50">
         <h2 className="text-lg font-semibold mb-4">Logout Confirmation</h2>
         <h1 className="text-xl mb-1 text-blue-500 font-thin">
           {currentUserData?.name}

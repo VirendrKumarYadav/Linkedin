@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { HiOutlinePencil } from "react-icons/hi";
-import { useAuthContext } from "../../firebase/AuthProvider";
 import { getCollectionDetails } from "../../API/FireStore";
 import PostCard from "../Element/PostCard/PostCard";
 import { getPosts } from "../../API/FireStore";
 import "../Profile/Profile.css";
+import {uploadImage} from "../../API/UploadImage";
 import UploadImage from "../Element/UploadImage/UploadImage";
+
 const Profile = (prop) => {
    const [modalOpen, setModalOpen] = useState(false);
    const [allStatus, setAllStatus] = useState([]);
@@ -41,7 +42,7 @@ const Profile = (prop) => {
    };
 
    const uploadImageCall = () => {
-     UploadImage(
+     uploadImage(
        currentImage,
        currentUserData?.id,
        setModalOpen,
@@ -49,7 +50,8 @@ const Profile = (prop) => {
        setCurrentImage
      );
    };
-  
+  console.log(currentImage);
+
   return (
     <div className="profile-card w-full flex justify-center items-center flex-col">
       {
@@ -62,7 +64,7 @@ const Profile = (prop) => {
           progress={progress}
         />
       }
-      <div className=" posts-card bg-white shadow-md p-6 rounded-lg mb-4 flex justify-center items-start flex-wrap w-4/5 max-lg:w-4/5">
+      <div className="posts-card bg-white shadow-md p-6 rounded-lg mb-4 flex justify-center items-start flex-wrap w-4/5 max-lg:w-4/5">
         <div className="profile-info flex flex-col">
           <div className="edit-bt">
             <HiOutlinePencil
@@ -73,7 +75,9 @@ const Profile = (prop) => {
           <img
             className="profile-image"
             onClick={() => setModalOpen(true)}
-            src={""}
+            src={Object.values(currentProfile).length === 0
+               ?currentUserData?.imageLink:""
+              }
             alt="profile-image"
           />
 

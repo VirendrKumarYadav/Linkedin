@@ -13,11 +13,15 @@ import Header from "../componants/Home/common/Header/Header";
 import SigninNav from "../PagesNav/Login";
 import SignupNav from "../PagesNav/Joinin";
 import DashboardNav from "../PagesNav/Dashboard";
+import Footer from "../componants/Footer/Footer";
 
 export const Router = createBrowserRouter([
   {
     path: "/",
-    element: <DashboardNav />,
+    element: <div>
+      <DashboardNav />
+      <Footer/>
+      </div>,
   },
   {
     path: "/about",

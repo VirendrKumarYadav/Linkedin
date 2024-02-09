@@ -10,6 +10,8 @@ import PostCard from "../../../Element/PostCard/PostCard";
 import { getCurrentTimeStamp } from "../../../Element/getTimeStamp/getTimeCurrent";
 import { getUniqueId } from "../../../Element/getTimeStamp/UniqueId";
 
+
+
 const PostStatus = () => {
   const userEmail = localStorage.getItem("userEmail");
   const [modalOpen, setModalOpen] = useState(false);
@@ -47,7 +49,7 @@ const PostStatus = () => {
   // console.log(allStatus);
 
   return (
-    <div className="flex justify-center items-center flex-col">
+    <div className=" post-status flex justify-center items-center flex-col">
       <div className="post-status-class mt-8 flex justify-center items-center">
         <button className="open-post-modal" onClick={() => setModalOpen(true)}>
           Start a post

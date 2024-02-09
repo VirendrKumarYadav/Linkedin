@@ -10,7 +10,6 @@ export default function ProfileNav () {
     let navigate = useNavigate();
     useEffect(() => {
         onAuthStateChanged(auth, (res) => {
-            console.log(res);
             if (!res?.accessToken) {
                 navigate("/profile");
             } else {

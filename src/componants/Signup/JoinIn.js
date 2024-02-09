@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 import GoogleButton from "react-google-button";
 import { loggedIn } from "../../API/FireStore";
 
-
 const Signup = (prop) => {
   const auth = useAuthContext();
   const navigate = useNavigate();
@@ -16,38 +15,35 @@ const Signup = (prop) => {
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
-       e.preventDefault();
+    e.preventDefault();
     try {
-    const res= await auth.signUp(email, password);
-      toast.success("Created LinkedIn account.");
-
+      const res = await auth.signUp(email, password);
       navigate("/home");
       localStorage.setItem("userEmail", res.user.email);
-         prop.setUsername(username);
-       loggedIn({ name: username, userEmail: res.user.email });
+      // prop.setUsername(username);
+      loggedIn({ name: username, userEmail: res.user.email });
+       toast.success("Created LinkedIn account.");
+     
     } catch (e) {
       console.error(e);
       toast.error("Please check your email & password");
     }
-     
   };
 
   const onGoogleLogin = async (e) => {
-      e.preventDefault();
+    e.preventDefault();
     try {
-    const res= await auth.googleSignIn();
+      const res = await auth.googleSignIn();
       toast.success("Created LinkedIn account with Google");
       localStorage.setItem("userEmail", res.user.email);
       loggedIn({ name: username, userEmail: res.user.email });
       navigate("/home");
-     
     } catch (e) {
       console.error(e);
       toast.error("Email Id Invalid");
     }
-    
   };
-  
+
   return (
     <div className=" w-screen flex justify-between flex-col flex-wrap">
       <div className="sign-up-container flex justify-center flex-col items-center ">
@@ -88,7 +84,6 @@ const Signup = (prop) => {
                 name="username"
                 value={username}
                 autoComplete="true"
-              
                 onChange={(e) => setUsername(e.target.value)}
                 className="w-full px-6 py-1 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                 required

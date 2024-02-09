@@ -54,6 +54,7 @@
 .edit-btn {
   position: absolute;
   right: 20px;
+  z-index: 20;
 }
 .edit-icon {
   cursor: pointer;

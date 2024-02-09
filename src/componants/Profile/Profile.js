@@ -29,7 +29,7 @@ const Profile = (prop) => {
      };
      fetchCollectionData();
      fetchData();
-   }, []);
+   }, [uploadImage]);
 
    const fetchCollectionData = async () => {
      try {
@@ -50,7 +50,7 @@ const Profile = (prop) => {
        setCurrentImage
      );
    };
-  console.log(currentImage);
+
 
   return (
     <div className="profile-card w-full flex justify-center items-center flex-col">
@@ -75,9 +75,9 @@ const Profile = (prop) => {
           <img
             className="profile-image"
             onClick={() => setModalOpen(true)}
-            src={Object.values(currentProfile).length === 0
-               ?currentUserData?.imageLink:""
-              }
+            src={
+               currentUserData?.imageLink
+               }
             alt="profile-image"
           />
 
